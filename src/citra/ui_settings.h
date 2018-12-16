@@ -80,7 +80,6 @@ struct Values {
     // Multiplayer settings
     QString direct_connect_nickname, lobby_nickname, room_nickname, ip, room_name, room_description;
     uint port, room_port, host_type;
-    quint32 max_members;
     std::vector<std::string> ban_list;
 
     // Logging

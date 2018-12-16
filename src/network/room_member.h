@@ -131,8 +131,8 @@ public:
               const MacAddress& preferred_mac = BroadcastMac, const std::string& password = "");
 
     /**
-     * Sends a Wifi packet to the room.
-     * @param packet The Wifi packet to send.
+     * Sends a WiFi packet to the room.
+     * @param packet The WiFi packet to send.
      */
     void SendWifiPacket(const WifiPacket& packet);
 

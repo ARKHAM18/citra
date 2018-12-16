@@ -77,7 +77,7 @@ private:
     Core::System& system;
 };
 
-// Proxy Model for filtering the lobby
+// Proxy model for filtering the lobby
 class LobbyFilterProxyModel : public QSortFilterProxyModel {
     Q_OBJECT
 
@@ -87,11 +87,8 @@ public:
     void sort(int column, Qt::SortOrder order) override;
 
 public slots:
-    void SetFilterFull(bool);
     void SetFilterSearch(const QString&);
 
 private:
-    bool filter_in_list{};
-    bool filter_full{};
     QString filter_search;
 };

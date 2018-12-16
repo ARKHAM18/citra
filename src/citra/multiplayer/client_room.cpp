@@ -73,10 +73,9 @@ void ClientRoomWindow::UpdateView() {
         auto member_list{member.GetMemberInformation()};
         ui->chat->SetMemberList(member_list);
         const auto information{member.GetRoomInformation()};
-        setWindowTitle(QString("%1 (%2/%3 members) - connected")
+        setWindowTitle(QString("%1 (%2 members) - connected")
                            .arg(QString::fromStdString(information.name))
-                           .arg(member_list.size())
-                           .arg(information.max_members));
+                           .arg(member_list.size()));
         ui->description->setText(QString::fromStdString(information.description));
         return;
     }

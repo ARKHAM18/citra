@@ -1586,7 +1586,6 @@ void GMainWindow::UpdateDiscordRPC(const Network::RoomInformation& info) {
         if (member.IsConnected()) {
             const auto& member_info{member.GetMemberInformation()};
             presence.partySize = member_info.size();
-            presence.partyMax = info.max_members;
             presence.state = info.name.c_str();
         }
         auto details{
@@ -1620,7 +1619,7 @@ int main(int argc, char* argv[]) {
     ToggleConsole();
     config.LogErrors();
     Settings::LogSettings();
-    // Initialize ENet and movie system
+    // Initialize network and movie system
     system.Init1();
     // Register types to use in slots and signals
     qRegisterMetaType<std::size_t>("std::size_t");

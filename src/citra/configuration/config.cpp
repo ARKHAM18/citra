@@ -395,7 +395,6 @@ void Config::Load() {
     UISettings::values.host_type = ReadSetting("host_type", 0).toUInt(&ok);
     if (!ok)
         UISettings::values.host_type = 0;
-    UISettings::values.max_members = ReadSetting("max_members", 8).toUInt();
     UISettings::values.room_description = ReadSetting("room_description", "").toString();
     auto list{ReadSetting("ban_list", QStringList()).toStringList()};
     for (auto s : list)
@@ -591,7 +590,6 @@ void Config::Save() {
     WriteSetting("room_name", UISettings::values.room_name, "");
     WriteSetting("room_port", UISettings::values.room_port, Network::DefaultRoomPort);
     WriteSetting("host_type", UISettings::values.host_type, 0);
-    WriteSetting("max_members", UISettings::values.max_members, 16);
     WriteSetting("room_description", UISettings::values.room_description, "");
     QStringList list;
     for (const auto& i : UISettings::values.ban_list)

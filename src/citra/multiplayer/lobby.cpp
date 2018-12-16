@@ -48,7 +48,6 @@ Lobby::Lobby(QWidget* parent, Core::System& system)
     ui->nickname->setText(UISettings::values.lobby_nickname);
     // UI Buttons
     connect(ui->refresh_list, &QPushButton::released, this, &Lobby::RefreshLobby);
-    connect(ui->hide_full, &QCheckBox::stateChanged, proxy, &LobbyFilterProxyModel::SetFilterFull);
     connect(ui->search, &QLineEdit::textChanged, proxy, &LobbyFilterProxyModel::SetFilterSearch);
     connect(ui->room_list, &QTreeView::doubleClicked, this, &Lobby::OnJoinRoom);
     connect(ui->room_list, &QTreeView::clicked, this, &Lobby::OnExpandRoom);
@@ -149,7 +148,7 @@ void Lobby::OnRefreshLobby() {
             new LobbyItemName(room.has_password, QString::fromStdString(room.name)),
             new LobbyItemHost(QString::fromStdString(room.creator), QString::fromStdString(room.ip),
                               room.port),
-            new LobbyItemMemberList(members, room.max_members),
+            new LobbyItemMemberList(members),
         };
         model->appendRow(row);
         // To make the rows expandable, add the member data as a child of the first column of the
@@ -182,16 +181,6 @@ bool LobbyFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& s
     // Pass over any child rows (aka row that shows the members in the room)
     if (sourceParent != QModelIndex())
         return true;
-    // Filter by filled rooms
-    if (filter_full) {
-        auto member_list{sourceModel()->index(sourceRow, Column::MEMBER, sourceParent)};
-        int member_count{
-            sourceModel()->data(member_list, LobbyItemMemberList::MemberListRole).toList().size()};
-        int max_members{
-            sourceModel()->data(member_list, LobbyItemMemberList::MaxMembersRole).toInt()};
-        if (member_count >= max_members)
-            return false;
-    }
     // Filter by search parameters
     if (!filter_search.isEmpty()) {
         auto room_name{sourceModel()->index(sourceRow, Column::ROOM_NAME, sourceParent)};
@@ -212,11 +201,6 @@ bool LobbyFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex& s
 
 void LobbyFilterProxyModel::sort(int column, Qt::SortOrder order) {
     sourceModel()->sort(column, order);
-}
-
-void LobbyFilterProxyModel::SetFilterFull(bool filter) {
-    filter_full = filter;
-    invalidate();
 }
 
 void LobbyFilterProxyModel::SetFilterSearch(const QString& filter) {

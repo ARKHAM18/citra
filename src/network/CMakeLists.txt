@@ -1,6 +1,6 @@
 add_library(network STATIC
-    packet.cpp
-    packet.h
+    message.cpp
+    message.h
     room.cpp
     room.h
     room_member.cpp
@@ -9,4 +9,6 @@ add_library(network STATIC
 
 create_target_directory_groups(network)
 
-target_link_libraries(network PRIVATE common enet json-headers httplib)
+target_include_directories(network PRIVATE ${PROJECT_SOURCE_DIR}/externals/websocketpp)
+
+target_link_libraries(network PRIVATE common websocketpp json-headers httplib)

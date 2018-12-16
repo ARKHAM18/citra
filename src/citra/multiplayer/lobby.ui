@@ -71,13 +71,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="hide_full">
-           <property name="text">
-            <string>Hide Full Rooms</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>

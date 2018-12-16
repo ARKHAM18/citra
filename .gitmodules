@@ -19,9 +19,6 @@
 [submodule "fmt"]
     path = externals/fmt
     url = https://github.com/fmtlib/fmt.git
-[submodule "enet"]
-    path = externals/enet
-    url = https://github.com/lsalzman/enet.git
 [submodule "libressl"]
     path = externals/libressl
     url = https://github.com/citra-emu/ext-libressl-portable.git
@@ -40,3 +37,6 @@
 [submodule "teakra"]
     path = externals/teakra
     url = https://github.com/wwylele/teakra.git
+[submodule "websocketpp"]
+	path = externals/websocketpp
+	url = https://github.com/zaphoyd/websocketpp

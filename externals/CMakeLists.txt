@@ -47,9 +47,11 @@ add_subdirectory(teakra)
 target_include_directories(xbyak INTERFACE ./xbyak/xbyak)
 target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
 
-# ENet
-add_subdirectory(enet)
-target_include_directories(enet INTERFACE ./enet/include)
+# WebSocket++
+add_library(websocketpp INTERFACE)
+target_include_directories(websocketpp INTERFACE
+  $<BUILD_INTERFACE:${WEBSOCKETPP_INCLUDE_DIR}>
+  $<INSTALL_INTERFACE:include>)
 
 if (ENABLE_DISCORD_RPC)
     # Discord RPC

@@ -28,7 +28,6 @@ HostRoomWindow::HostRoomWindow(QWidget* parent, Core::System& system)
     : QDialog{parent, Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowSystemMenuHint},
       ui{std::make_unique<Ui::HostRoom>()}, system{system} {
     ui->setupUi(this);
-    ui->max_members->setMaximum(Network::MaxConcurrentConnections);
     // Set up validation for the text fields
     ui->room_name->setValidator(validation.GetRoomName());
     ui->nickname->setValidator(validation.GetNickname());
@@ -42,7 +41,6 @@ HostRoomWindow::HostRoomWindow(QWidget* parent, Core::System& system)
     ui->nickname->setText(UISettings::values.room_nickname);
     ui->room_name->setText(UISettings::values.room_name);
     ui->port->setValue(UISettings::values.room_port);
-    ui->max_members->setValue(UISettings::values.max_members);
     int index{static_cast<int>(UISettings::values.host_type)};
     if (index < ui->host_type->count())
         ui->host_type->setCurrentIndex(index);
@@ -79,7 +77,7 @@ void HostRoomWindow::Host() {
     bool created{system.Room().Create(
         ui->host_type->currentIndex() == 0, ui->room_name->text().toStdString(),
         ui->room_description->toPlainText().toStdString(), ui->nickname->text().toStdString(), port,
-        password, ui->max_members->value(), ban_list)};
+        password, ban_list)};
     if (!created) {
         NetworkMessage::ShowError(NetworkMessage::COULD_NOT_CREATE_ROOM);
         LOG_ERROR(Network, "Couldn't create room!");
@@ -91,7 +89,6 @@ void HostRoomWindow::Host() {
     // Store settings
     UISettings::values.room_nickname = ui->nickname->text();
     UISettings::values.room_name = ui->room_name->text();
-    UISettings::values.max_members = ui->max_members->value();
     UISettings::values.host_type = ui->host_type->currentIndex();
     UISettings::values.room_port = ui->port->value();
     UISettings::values.room_description = ui->room_description->toPlainText();
